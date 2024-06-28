@@ -2095,6 +2095,14 @@ hoist-non-react-statics@^3.3.1:
   dependencies:
     react-is "^16.7.0"
 
+hrnet-components@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/hrnet-components/-/hrnet-components-1.0.1.tgz#79180bcab7c368257706ef499581d8d72af51e48"
+  integrity sha512-RbKeIa6ajDUxXIHBzFx4A7aPiyXEGNlWI1VJt+noRnBK9BgUMPtuXCrnkzvGcOO4ISl2FwdXJX9g2y+o19NrrQ==
+  dependencies:
+    react "^18.2.0"
+    react-dom "^18.2.0"
+
 ignore@^5.2.0:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.3.1.tgz#5073e554cd42c5b33b394375f538b8593e34d4ef"

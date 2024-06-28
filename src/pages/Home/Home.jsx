@@ -12,7 +12,8 @@ import { useDispatch } from "react-redux";
 import { departments } from "../../data/Departments";
 import { states } from "../../data/States";
 import { addEmployee } from "../../reducers/employees";
-
+import { Modal } from "hrnet-components";
+import "hrnet-components/style.css";
 const Home = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -23,11 +24,40 @@ const Home = () => {
   const [state, setState] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [department, setDepartment] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const dispatch = useDispatch();
 
+  const handleDateChange = (date, setDate) => {
+    if (date && !isNaN(date.getTime())) {
+      setDate(date);
+    }
+  };
+
+  const areAllFieldsFilled = () => {
+    return (
+      firstName &&
+      lastName &&
+      dateOfBirth &&
+      startDate &&
+      street &&
+      city &&
+      state &&
+      zipCode &&
+      department
+    );
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!areAllFieldsFilled()) {
+      setErrorMessage("Please fill in all fields before submitting.");
+      return;
+    }
+
+    setErrorMessage("");
 
     let newEmployee = {
       firstName: firstName,
@@ -43,10 +73,11 @@ const Home = () => {
     console.log(newEmployee, "NEW EMPLOYEEEE");
 
     dispatch(addEmployee(newEmployee));
+    setIsModalOpen(true);
   };
 
   return (
-    <div className="pt-10">
+    <div className="pt-10 h-[100vh]">
       <div>
         <div className="container m-auto">
           <form
@@ -56,7 +87,7 @@ const Home = () => {
             className="flex justify-around w-full"
           >
             <div>
-              <h1 className="flex items-center justify-center p-2 font-bold text-center text-green-400 uppercase bg-white rounded-full shadow-sm">
+              <h1 className="flex items-center justify-center p-2 font-bold text-center text-white uppercase bg-green-400 rounded-full shadow-sm">
                 Personal informations
               </h1>
               <div className="flex flex-col p-8 mt-5 bg-white rounded-md shadow-md">
@@ -98,14 +129,20 @@ const Home = () => {
                       onChange={(event) =>
                         setDateOfBirth(new Date(event.target.value))
                       }
-                      value={format(dateOfBirth, "yyyy-MM-dd")}
+                      value={
+                        dateOfBirth && !isNaN(dateOfBirth.getTime())
+                          ? format(dateOfBirth, "yyyy-MM-dd")
+                          : ""
+                      }
                     />
                   </PopoverHandler>
                   <PopoverContent>
                     <DayPicker
                       mode="single"
                       selected={dateOfBirth}
-                      onSelect={setDateOfBirth}
+                      onSelect={(date) =>
+                        handleDateChange(date, setDateOfBirth)
+                      }
                       showOutsideDays
                       className="border-0"
                       classNames={{
@@ -162,14 +199,18 @@ const Home = () => {
                       onChange={(event) =>
                         setStartDate(new Date(event.target.value))
                       }
-                      value={format(startDate, "yyyy-MM-dd")}
+                      value={
+                        startDate && !isNaN(startDate.getTime())
+                          ? format(startDate, "yyyy-MM-dd")
+                          : ""
+                      }
                     />
                   </PopoverHandler>
                   <PopoverContent>
                     <DayPicker
                       mode="single"
                       selected={startDate}
-                      onSelect={setStartDate}
+                      onSelect={(date) => handleDateChange(date, setStartDate)}
                       showOutsideDays
                       className="border-0"
                       classNames={{
@@ -214,7 +255,7 @@ const Home = () => {
               </div>
             </div>
             <div>
-              <h1 className="flex items-center justify-center p-2 font-bold text-center text-green-400 uppercase bg-white rounded-full shadow-sm">
+              <h1 className="flex items-center justify-center p-2 font-bold text-center text-white uppercase bg-green-400 rounded-full shadow-sm">
                 Address
               </h1>
               <div className="flex flex-col p-8 mt-5 bg-white rounded-md shadow-md">
@@ -274,7 +315,7 @@ const Home = () => {
               </div>
             </div>
             <div>
-              <h1 className="flex items-center justify-center p-2 font-bold text-center text-green-400 uppercase bg-white rounded-full shadow-sm">
+              <h1 className="flex items-center justify-center p-2 font-bold text-center text-white uppercase bg-green-400 rounded-full shadow-sm">
                 Department
               </h1>
               <div className="flex flex-col p-8 mt-5 bg-white rounded-md shadow-md">
@@ -298,13 +339,14 @@ const Home = () => {
             </div>
           </form>
 
-          <button
-            type="submit"
-            form="create-employee"
-            className="px-8 py-2 mt-10 font-bold text-green-400 bg-white rounded-full shadow-sm hover:bg-green-200 hover:text-black"
-          >
-            Save
+          <button type="submit" form="create-employee" className="my-20">
+            <Modal triggerText="Save" validate={areAllFieldsFilled}>
+              <h2 className="text-lg font-bold">Employee Created!</h2>
+            </Modal>
           </button>
+          {errorMessage && (
+            <p className="mt-2 text-center text-red-500">{errorMessage}</p>
+          )}
         </div>
       </div>
     </div>

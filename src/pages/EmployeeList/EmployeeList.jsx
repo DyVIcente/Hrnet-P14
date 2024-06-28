@@ -74,8 +74,13 @@ const EmployeeList = () => {
   });
 
   return (
-    <div>
-      <MaterialReactTable table={table} />
+    <div className="h-[100vh] bg-green-300">
+      <h1 className="flex items-center justify-center pt-10 text-4xl font-bold text-white">
+        Employee List
+      </h1>
+      <div className="mt-10 mb-20">
+        <MaterialReactTable table={table} />
+      </div>
     </div>
   );
 };

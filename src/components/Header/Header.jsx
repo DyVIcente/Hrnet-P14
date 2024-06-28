@@ -8,14 +8,14 @@ const Header = () => {
           <img src={LogoWH} alt="logo wealth health" className="w-20 h-20" />
         </NavLink>
         <div className="title">
-          <h1 className="text-2xl font-bold">HRnet</h1>
+          <h1 className="text-2xl font-bold text-white">HRnet</h1>
         </div>
       </div>
       <nav className="flex items-center gap-10 font-bold">
-        <NavLink to="/" className="hover:text-green-400">
+        <NavLink to="/" className="text-white">
           Create Employee
         </NavLink>
-        <NavLink to="/employee-list" className="hover:text-green-400">
+        <NavLink to="/employee-list" className="text-white">
           Employee List
         </NavLink>
       </nav>

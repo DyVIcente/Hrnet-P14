@@ -5,13 +5,12 @@ import { Header } from "../components";
 const RootLayout = () => (
   <div>
     <ScrollRestoration />
-    <header className="sticky top-0 z-20 px-10 bg-white shadow-sm">
+    <header className="sticky top-0 z-20 px-10 bg-green-400 shadow-md">
       <Header />
     </header>
-    <main className="bg-gray-200">
+    <main className="bg-white">
       <Outlet />
     </main>
-    <footer>footer</footer>
   </div>
 );
 export { RootLayout };
